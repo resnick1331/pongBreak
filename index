@@ -20,7 +20,7 @@
     var x = canvas.width/2;
     var y = canvas.height-30;
     var dx = -2;
-    var dy = 2;
+    var dy = -2;
     var color = "#0095DD";
 
     //Radio de la bola
@@ -33,52 +33,7 @@
     var rightPressed = false;
     var leftPressed = false;
 
-    //Dibujar Bola
-    function drawBall() {
-        ctx.beginPath();
-        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = color;
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    //Dibujar Paleta
-    function drawPaddle() {
-        ctx.beginPath();
-        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = "#6c42ff";
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    function draw() {
-        //Limpiar Lienzo
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        //Choco arriba o abajo? Cambio de dirección
-        if(y + dy < 0 + ballRadius  || y + dy > canvas.height - ballRadius ) {
-            dy = -dy;
-        }
-
-        //Choco izquierda o derecha? Cambio de dirección
-        if(x + dx < 0 + ballRadius  || x + dx > canvas.width - ballRadius) {
-            dx = -dx;
-        }
-
-        drawBall();
-
-        if(rightPressed && paddleX+paddleWidth <= canvas.width) {
-            paddleX += 7;
-        }
-        else if(leftPressed && paddleX >= 0) {
-            paddleX -= 7;
-        }
-        drawPaddle();
-        x += dx;
-        y += dy;
-    }
-
-    //Mover Barra
+    //Verificar si la tecla esta presionada
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
@@ -102,8 +57,65 @@
         }
     }
 
+    //Dibujar Bola
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    //Dibujar Paleta
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#6c42ff";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function draw() {
+        //Limpiar Lienzo
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        //Choco arriba? Cambio de dirección
+        if(y + dy < 0 + ballRadius) {
+            dy = -dy;
+        }
+
+        //Llego abajo? Perdiste
+        if(y + dy > canvas.height - ballRadius){
+            //La pelota toca la barra?
+            if(x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+            }
+            else {
+                alert("GAME OVER");
+                document.location.reload();
+            }
+        }
+
+        //Choco izquierda o derecha? Cambio de dirección
+        if(x + dx < 0 + ballRadius  || x + dx > canvas.width - ballRadius) {
+            dx = -dx;
+        }
+
+        if(rightPressed && paddleX+paddleWidth <= canvas.width) {
+            paddleX += 7;
+        }
+        else if(leftPressed && paddleX >= 0) {
+            paddleX -= 7;
+        }
+        drawPaddle();
+
+        drawBall();
+        x += dx;
+        y += dy;
+    }
+
     //Dibujar después de 5ms
-    setInterval(draw, 5);
+    setInterval(draw, 15);
 </script>
 
 </body>
