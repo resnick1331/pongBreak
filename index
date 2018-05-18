@@ -14,7 +14,22 @@
 <canvas id="myCanvas" width="480" height="320"></canvas>
 
 <script>
-    // JavaScript code goes here
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // Rectangulo
+    ctx.beginPath();
+    ctx.rect(20, 40, 50, 50);
+    ctx.fillStyle = "#6c42ff";
+    ctx.fill();
+    ctx.closePath();
+
+    //Circulo
+    ctx.beginPath();
+    ctx.arc(240, 160, 20, 0, Math.PI*2, false);
+    ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+    ctx.fill();
+    ctx.closePath();
 </script>
 
 </body>
