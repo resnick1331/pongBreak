@@ -30,6 +30,10 @@
     var paddleWidth = 75;
     var paddleX = (canvas.width-paddleWidth)/2;
 
+    var rightPressed = false;
+    var leftPressed = false;
+
+    //Dibujar Bola
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -61,12 +65,44 @@
             dx = -dx;
         }
 
-        //Dibujar Bola
         drawBall();
+
+        if(rightPressed && paddleX+paddleWidth <= canvas.width) {
+            paddleX += 7;
+        }
+        else if(leftPressed && paddleX >= 0) {
+            paddleX -= 7;
+        }
         drawPaddle();
         x += dx;
         y += dy;
     }
+
+    //Mover Barra
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    //Presionar
+    function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = true;
+        }
+    }
+
+    //Dejar de presionar
+    function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+            rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+            leftPressed = false;
+        }
+    }
+
+    //Dibujar después de 5ms
     setInterval(draw, 5);
 </script>
 
