@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pong BreakOut</title>
 
     <style>
         * { padding: 0; margin: 0; }
@@ -37,23 +37,13 @@
         //Limpiar Lienzo
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        //Choco arriba? Cambio de dirección
-        if(y + dy < 0) {
+        //Choco arriba o abajo? Cambio de dirección
+        if(y + dy < 0 + ballRadius  || y + dy > canvas.height - ballRadius ) {
             dy = -dy;
         }
 
-        //Choco abajo? Cambio de dirección
-        if(y + dy > canvas.height) {
-            dy = -dy;
-        }
-
-        //Choco izquierda? Cambio de dirección
-        if(x + dx < 0) {
-            dx = -dx;
-        }
-
-        //Choco derecha? Cambio de dirección
-        if(x + dx > canvas.width) {
+        //Choco izquierda o derecha? Cambio de dirección
+        if(x + dx < 0 + ballRadius  || x + dx > canvas.width - ballRadius) {
             dx = -dx;
         }
 
