@@ -147,6 +147,9 @@
         ctx.fillText("Score: "+score, 8, 20);
     }
 
+    // Store the interval ID
+    var intervalId = setInterval(draw,15);
+
     function draw() {
         //Limpiar Lienzo
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -157,13 +160,14 @@
         }
 
         //Llego abajo? Perdiste
-        if(y + dy > canvas.height - ballRadius){
+        else if(y + dy > canvas.height - ballRadius){
             //La pelota toca la barra?
             if(x > paddleX && x < paddleX + paddleWidth) {
                 dy = -dy;
             }
             else {
                 alert("GAME OVER");
+                clearInterval(intervalId)  // Stop the game loop
                 document.location.reload();
             }
         }
@@ -191,7 +195,7 @@
     }
 
     //Dibujar después de 5ms
-    setInterval(draw, 15);
+    //setInterval(draw, 15);
 </script>
 
 </body>
